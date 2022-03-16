@@ -9,13 +9,13 @@ public class NBody
 		return secondItemInFile;
 	}
 
-	public static Body[] readBodies(String file_name)
+	public static Planet[] readBodies(String file_name)
 	{
 		In in = new In(file_name);
 
 		int num = in.readInt();
 		double radius = in.readDouble();
-		Body[] fiveplanets = new Body[num];
+		Planet[] fiveplanets = new Planet[num];
 
 		for (int i = 0;i < num ;i++ ) 
 		{
@@ -26,7 +26,7 @@ public class NBody
 			double mass = in.readDouble();
 			String imgFileName = in.readString();
 
-			Body planet = new Body(xxPos, yyPos, xxVel,
+			Planet planet = new Planet(xxPos, yyPos, xxVel,
 								   yyVel, mass, imgFileName);
 
 			fiveplanets[i] = planet;
@@ -42,7 +42,7 @@ public class NBody
 		String filename = args[2];
 
 		double radius = readRadius(filename);
-		Body[] fiveplanets = readBodies(filename);
+		Planet[] fiveplanets = readBodies(filename);
 
 		/* drawing background */
 		StdDraw.setScale(-radius, radius);
@@ -50,7 +50,7 @@ public class NBody
 		StdDraw.picture(0, 0, imageBackground);
 
 		//drawing every planet in its position
-		for (Body planet : fiveplanets) 
+		for (Planet planet : fiveplanets) 
 		{
 			planet.draw();
 		}
@@ -70,14 +70,14 @@ public class NBody
 				yForces[i] = fiveplanets[i].calcNetForceExertedByY(fiveplanets);
 			}
 			int contr = 0;
-			for(Body element : fiveplanets)
+			for(Planet element : fiveplanets)
 			{
 				element.update(dt, xForces[contr], yForces[contr]);
 				contr ++;
 			}
 
 			StdDraw.picture(0, 0, imageBackground);
-			for(Body planet : fiveplanets)
+			for(Planet planet : fiveplanets)
 			{
 				planet.draw();
 			}
