@@ -9,7 +9,7 @@ public class NBody
 		return secondItemInFile;
 	}
 
-	public static Planet[] readBodies(String file_name)
+	public static Planet[] readPlanets(String file_name)
 	{
 		In in = new In(file_name);
 
@@ -42,7 +42,7 @@ public class NBody
 		String filename = args[2];
 
 		double radius = readRadius(filename);
-		Planet[] fiveplanets = readBodies(filename);
+		Planet[] fiveplanets = readPlanets(filename);
 
 		/* drawing background */
 		StdDraw.setScale(-radius, radius);
