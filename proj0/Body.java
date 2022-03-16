@@ -1,4 +1,5 @@
-public class Body{
+public class Body
+{
 
 	/*  its current x position */
 	public double xxPos;
@@ -6,7 +7,7 @@ public class Body{
 	//its current y position
 	public double yyPos;
 
-	//
+	//its current velocity in the x direction
 	public double xxVel;
 
 	public double yyVel;
@@ -18,7 +19,8 @@ public class Body{
 	public static final double G = 6.67e-11;
 
 	public Body(double xP, double yP, double xV,
-				double yV, double m, String img){
+				double yV, double m, String img)
+	{
 		xxPos = xP;
 		yyPos = yP;
 		xxVel = xV;
@@ -27,7 +29,8 @@ public class Body{
 		imgFileName = img;
 	}
 
-	public Body(Body b){
+	public Body(Body b)
+	{
 		xxPos = b.xxPos;
 		yyPos = b.yyPos;
 		xxVel = b.xxVel;
@@ -36,31 +39,74 @@ public class Body{
 		imgFileName = b.imgFileName;
 	}
 
-	public double calcDistance(Body samh){
+	public double calcDistance(Body b)
+	{
 		double dx = this.xxPos - b.xxPos;
 		double dy = this.yyPos - b.yyPos;
 		double r = Math.hypot(dx, dy);
 		return r;
 	}
 
-	public double calcForceExertedBy(Body samh){
+	public double calcForceExertedBy(Body b)
+	{
 		double r1 = calcDistance(b);
 		double F = G * this.mass * b.mass / (r1*r1);
 		return F;
 	}
 
-	public double calcForceExertedByX(Body b){
+	public double calcForceExertedByX(Body b)
+	{
 		double Fx = this.calcForceExertedBy(b) * (b.xxPos - this.xxPos) / this.calcDistance(b);
 		return Fx;
 	}
 
-	public double calcForceExertedByY(Body b){
+	public double calcForceExertedByY(Body b)
+	{
 		double Fy = this.calcForceExertedBy(b) * (b.yyPos - this.yyPos) / this.calcDistance(b);
 		return Fy;
 	}
 
-	public double calcNetForceExertedByX(Body[] allBoys){
-		Body[] allBoys = {samh, rocinante, aegir};
+	public double calcNetForceExertedByX(Body[] allBodys)
+	{
+		double Fxnet = 0;
+		for (Body object : allBodys) 
+		{
+			if (this.equals(object)) 
+			{
+				continue;
+			}
+			Fxnet += this.calcForceExertedByX(object);
+		}
+		return Fxnet;
+	}
+
+	public double calcNetForceExertedByY(Body[] allBodys)
+	{
+		double Fynet = 0;
+		for (Body object : allBodys) 
+		{
+			if (this.equals(object)) 
+			{
+				continue;
+			}
+			Fynet += this.calcForceExertedByY(object);
+		}
+		return Fynet;
+	}
+
+	public void update(double dt, double fX, double fY)
+	{
+		double a_netx = fX / this.mass;
+		double a_nety = fY / this.mass;
+		xxVel = this.xxVel + dt * a_netx;
+		yyVel = this.yyVel + dt * a_nety;
+		xxPos = this.xxPos + dt * xxVel;
+		yyPos = this.yyPos + dt * yyVel;
+	}
+
+	public void draw()
+	{
 		
+		StdDraw.picture(this.xxPos, this.yyPos, "images/" + this.imgFileName);
 	}
 }
