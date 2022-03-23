@@ -2,51 +2,63 @@ public class LinkedListDeque<T> {
     private Node sentinel;
     private int size;
 
-    public class Node{
+    public class Node {
         public Node prev;
         public T item;
         public Node next;
-        public Node(T item, Node prev, Node next){
+        public Node(T item, Node prev, Node next) {
             this.item = item;
             this.prev = prev;
             this.next = next;
         }
 
-        public Node(){
+        public Node() {
             this.next = null;
             this.prev = null;
         }
     }
 
-    public LinkedListDeque(){
+    public LinkedListDeque() {
         sentinel = new Node();
         sentinel.prev = sentinel;
         sentinel.next = sentinel;
         size = 0;
     }
 
-    public void addFirst(T item){
+    public LinkedListDeque(LinkedListDeque other) {
+        sentinel = new Node();
+        sentinel.prev = sentinel;
+        sentinel.next = sentinel;
+        size = 0;
+
+        for (int i = 0; i < other.size(); i += 1)
+        {
+            addLast((T) other.get(i));
+        }
+    }
+
+    public void addFirst(T item) {
         Node firstnode = new Node(item, sentinel, sentinel.next);
         sentinel.next = firstnode;
         firstnode.next.prev = firstnode;
         size += 1;
     }
 
-    public void addLast(T item){
+    public void addLast(T item) {
         sentinel.prev.next = new Node(item, sentinel.prev, sentinel);
         sentinel.prev = sentinel.prev.next;
         size += 1;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return size == 0;
     }
 
-    public int size(){
+    public int size() {
         return size;
     }
 
-    public void printDeque(){
+    public void printDeque() {
         if (size == 0)
         {
             System.out.println("empty deque");
@@ -61,7 +73,7 @@ public class LinkedListDeque<T> {
         System.out.print("\n");
     }
 
-    public T removeFirst(){
+    public T removeFirst() {
         if (isEmpty())
         {
             return null;
@@ -82,7 +94,7 @@ public class LinkedListDeque<T> {
         return p1.item;
     }
 
-    public T removeLast(){
+    public T removeLast() {
         if (isEmpty())
         {
             return null;
@@ -103,7 +115,7 @@ public class LinkedListDeque<T> {
         return p1.item;
     }
 
-    public T get(int index){
+    public T get(Integer index) {
         if (isEmpty())
         {
             return null;
@@ -120,7 +132,7 @@ public class LinkedListDeque<T> {
         return pindex.item;
     }
 
-    public T getRecrusive(int index){
+    public T getRecrusive(Integer index) {
         if (isEmpty())
         {
             return null;
@@ -132,7 +144,7 @@ public class LinkedListDeque<T> {
         return getRecrusivehelper(index, sentinel.next);
     }
 
-    public T getRecrusivehelper(int index, Node pindex){
+    public T getRecrusivehelper(Integer index, Node pindex) {
         if (index == 0){
             return pindex.item;
         }
