@@ -115,7 +115,7 @@ public class LinkedListDeque<T> {
         return p1.item;
     }
 
-    public T get(Integer index) {
+    public T get(int index) {
         if (isEmpty())
         {
             return null;
@@ -132,7 +132,7 @@ public class LinkedListDeque<T> {
         return pindex.item;
     }
 
-    public T getRecrusive(Integer index) {
+    public T getRecrusive(int index) {
         if (isEmpty())
         {
             return null;
@@ -144,7 +144,7 @@ public class LinkedListDeque<T> {
         return getRecrusivehelper(index, sentinel.next);
     }
 
-    public T getRecrusivehelper(Integer index, Node pindex) {
+    public T getRecrusivehelper(int index, Node pindex) {
         if (index == 0){
             return pindex.item;
         }
