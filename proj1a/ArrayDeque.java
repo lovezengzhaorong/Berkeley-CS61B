@@ -12,32 +12,32 @@ public class ArrayDeque<T> {
         nextFirst = 0;
         nextLast = nextFirst + 1;
     }
-
+    /*
     public ArrayDeque(ArrayDeque other) {
         size = 0;
         items = (T[]) new Object[capacity];
         nextFirst = 0;
         nextLast = nextFirst + 1;
 
-        for (int i = 0; i < other.size(); i += 1)
-        {
+        for (int i = 0; i < other.size(); i += 1) {
             addLast((T) other.get(i));
         }
     }
+    
+    */
 
-    public int addone(int x) {
+    private int addone(int x) {
         return (x + 1) % items.length;
     }
 
-    public int backone(int x) {
+    private int backone(int x) {
         return (x - 1 + items.length) % items.length;
     }
 
-    public void resize(int newcapacity) {
+    private void resize(int newcapacity) {
         T[] newitems = (T[]) new Object[newcapacity];
         int oldindex = addone(nextFirst);
-        for (int i = 0; i < size; i++)
-        {
+        for (int i = 0; i < size; i++) {
             newitems[i] = items[oldindex];
             oldindex = addone(oldindex);
         }
@@ -47,8 +47,7 @@ public class ArrayDeque<T> {
     }
 
     public void addFirst(T item) {
-        if (size == items.length)
-        {
+        if (size == items.length) {
             resize(size * RFACTOR);
         }
         items[nextFirst] = item;
@@ -57,8 +56,7 @@ public class ArrayDeque<T> {
     }
 
     public void addLast(T item) {
-        if (size == items.length)
-        {
+        if (size == items.length) {
             resize(size * RFACTOR);
         }
         items[nextLast] = item;
@@ -76,8 +74,7 @@ public class ArrayDeque<T> {
 
     public void printDeque() {
         int i = addone(nextFirst);
-        for (int j = 0; j < size; j++)
-        {
+        for (int j = 0; j < size; j++) {
             System.out.print(items[i] + " ");
             i = addone(i);
         }
@@ -85,40 +82,35 @@ public class ArrayDeque<T> {
     }
 
     public T removeFirst() {
-        if (isEmpty())
-        {
+        if (isEmpty()) {
             return null;
         }
         T firstitem = items[addone(nextFirst)];
         items[addone(nextFirst)] = null;
         nextFirst = addone(nextFirst);
         size -= 1;
-        if (items.length >= (2 * capacity) && size < (items.length / 4))
-        {
+        if (items.length >= (2 * capacity) && size < (items.length / 4)) {
             resize(items.length / 2);
         }
         return firstitem;
     }
 
     public T get(int index) {
-        if (index >= size || isEmpty())
-        {
+        if (index >= size || isEmpty()) {
             return null;
         }
         return items[index];
     }
 
     public T removeLast() {
-        if (isEmpty())
-        {
+        if (isEmpty()) {
             return null;
         }
         T lastitem = items[backone(nextLast)];
         items[backone(nextLast)] = null;
         nextLast = backone(nextLast);
         size -= 1;
-        if (items.length >= (2 * capacity) && size < (items.length / 4))
-        {
+        if (items.length >= (2 * capacity) && size < (items.length / 4)) {
             resize(items.length / 2);
         }
         return lastitem;
