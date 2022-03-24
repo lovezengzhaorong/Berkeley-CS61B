@@ -23,7 +23,7 @@ public class ArrayDeque<T> {
             addLast((T) other.get(i));
         }
     }
-    
+
     */
 
     private int addone(int x) {
@@ -99,7 +99,8 @@ public class ArrayDeque<T> {
         if (index >= size || isEmpty()) {
             return null;
         }
-        return items[index];
+        int start = addone(nextFirst);
+        return items[(start + index) % items.length];
     }
 
     public T removeLast() {
